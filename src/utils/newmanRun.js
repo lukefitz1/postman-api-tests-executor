@@ -73,7 +73,6 @@ module.exports = async options => {
       if (data.error == null) {
         result = "passed"
       } else {
-        process.env.ERROR = "1"
         result = "failed"
       }
 
@@ -107,6 +106,11 @@ module.exports = async options => {
         results = summary;
         jsonToFile(results, "Postman_Summary");
       }
+
+      if (process.env.ERROR = "1") {
+        process.exit(1);
+        // process.env.CODEBUILD_BUILD_SUCCEEDING = 0
+      }
     });
 
     function sendTestData(tests) {
@@ -118,11 +122,6 @@ module.exports = async options => {
       // .catch(function (error) {
       //   console.log(error);
       // });
-
-      if (process.env.ERROR = "1") {
-        // process.exit(1);
-        process.env.CODEBUILD_BUILD_SUCCEEDING = 0
-      }
     }
   return results;
 };
