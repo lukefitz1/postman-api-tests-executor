@@ -114,6 +114,7 @@ module.exports = async options => {
     function sendTestData(tests) {
       console.log(`FUCK ERROR: ${process.env.ERROR}`)
       console.log(`TEST_FAILURES: ${process.env.TEST_FAILURES}`)
+      console.log(`CODEBUILD_BUILD_SUCCEEDING: ${process.env.CODEBUILD_BUILD_SUCCEEDING}`)
       console.log(`Time_stamp: ${timestamp}`)
       // testResultsApiClient.post("/", tests)
       // .then(function (response) {

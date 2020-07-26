@@ -29,5 +29,6 @@ phases:
         COMMAND="node src/index.js --env=$ENV_STAGE --collection=$QA_API_TESTS"
         eval $COMMAND
       - echo Test Failure Status... $TEST_FAILURES
+      - echo Test Failure Status... $CODEBUILD_BUILD_SUCCEEDING
       - echo ERROR STATE AT THE END IS... $ERROR
       - exit $ERROR
