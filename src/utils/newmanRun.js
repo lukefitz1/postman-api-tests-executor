@@ -5,7 +5,6 @@ const envConfig = require("../utils/envConfig");
 const jsonToFile = require("../utils/jsonToFile");
 const axios = require("axios");
 const util = require('util');
-require('dotenv');
 
 const RESOLVED_SOURCE_VERSION =
   process.env.CODEBUILD_RESOLVED_SOURCE_VERSION || "Unknown";
@@ -75,8 +74,6 @@ module.exports = async options => {
         result = "passed"
       } else {
         process.env.ERROR = "1"
-        process.env.TEST_FAILURES = "1"
-        process.env.CODEBUILD_BUILD_SUCCEEDING = 0
         result = "failed"
       }
 
@@ -124,6 +121,10 @@ module.exports = async options => {
       // .catch(function (error) {
       //   console.log(error);
       // });
+
+      if (process.env.ERROR = "1") {
+        process.exit(1);
+      }
     }
   return results;
 };
