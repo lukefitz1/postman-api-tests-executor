@@ -74,6 +74,7 @@ module.exports = async options => {
         result = "passed"
       } else {
         process.env.ERROR = "1"
+        process.env.TEST_FAILURES = "1"
         result = "failed"
       }
 
@@ -111,6 +112,7 @@ module.exports = async options => {
 
     function sendTestData(tests) {
       console.log(`FUCK ERROR: ${process.env.ERROR}`)
+      console.log(`TEST_FAILURES: ${process.env.TEST_FAILURES}`)
       console.log(`Time_stamp: ${timestamp}`)
       // testResultsApiClient.post("/", tests)
       // .then(function (response) {
