@@ -3,16 +3,7 @@ version: 0.2
 env:
   variables:
     NODE_OPTIONS: "--max-old-space-size=14336"
-    ENDPOINT_SCHEMA_LAMBDA: "false"
-    NEW_RELIC_INSIGHTS_INSERT_URL: "https://insights-collector.newrelic.com/v1/accounts/1971382/events"
-    PROJECT_URL: "https://github.com/Agrium/agrium-qa-api-tests"
-    PROJECT_NAME: "Postman/Newman"
   parameter-store:
-    POSTMAN_API_KEY: "/1/common/postman_api_key"
-    NEW_RELIC_INSIGHTS_INSERT_KEY: "/1/common/new_relic_insights_insert_key_qa"
-    OAI_USER_ID: "/1/common/nutrien-api-tests-s3-endpoint-oai-user-id"
-    PACKAGECLOUD_MASTER_TOKEN: "/agrium/cxh-client/ssm/packagecloud_master_token"
-    REPORTING_BUCKET: "/1/common/nutrien-api-tests-api-test-results"
 phases:
   install:
     runtime-versions:
@@ -20,9 +11,6 @@ phases:
     commands:
       - echo Entered the INSTALL phase...
       - APP_DIR=`pwd`
-      - echo Setting up package cloud config
-      - force_npm=1
-      - curl -s https://$PACKAGECLOUD_MASTER_TOKEN:@packagecloud.io/install/repositories/agrible/lovepaign/script.node.sh | bash
   build:
     commands:
       - echo Installing source NPM dependencies...
