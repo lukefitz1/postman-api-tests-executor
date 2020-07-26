@@ -49,9 +49,6 @@ module.exports = async () =>  {
   }
 
   const { environments } = await postmanCloud.getEnvironments();
-  console.log("FUCK")
-  console.log(environments)
-  console.log(env)
   const envUid = environments.find(item =>  item.name.toLowerCase() === env.toLowerCase()).uid;
   console.log(envUid)
   cloudEnvPath = postmanCloud.addApiKeyToUrl(envUid, postmanCloud.envUrl); //${url}/${uid}?apikey=${apiKey}

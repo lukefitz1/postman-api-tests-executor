@@ -73,6 +73,7 @@ module.exports = async options => {
       if (data.error == null) {
         result = "passed"
       } else {
+        process.env.ERROR = 1
         result = "failed"
       }
 
