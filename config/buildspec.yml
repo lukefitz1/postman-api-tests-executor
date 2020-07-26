@@ -19,6 +19,8 @@ phases:
       - npm install
   post_build:
     commands:
+      - AWS_RUN=true
+      - ERRORS_TO_CONSOLE=false
       - ERROR=0
       - |
         ENV="$ENV_STAGE"
