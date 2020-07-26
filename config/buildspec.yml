@@ -28,7 +28,3 @@ phases:
         eval $COMMAND
       - echo ERROR STATE AT THE END IS... $ERROR
       - exit $ERROR
-
-artifacts:
-  files:
-    - "**/*"
