@@ -73,8 +73,7 @@ module.exports = async options => {
       if (data.error == null) {
         result = "passed"
       } else {
-        process.env.ERROR = 1
-        console.log(`FUCK ERROR: ${process.env.ERROR}`)
+        process.env.ERROR = "1"
         result = "failed"
       }
 
@@ -102,7 +101,6 @@ module.exports = async options => {
     .on("done", async (err, summary) => {
       sendTestData(tests)
 
-      console.log(`FUCK ERROR: ${process.env.ERROR}`)
       if (err || summary.error) {
         console.error(`Collection ran and encountered error: ${err}`);
       } else {
