@@ -102,6 +102,7 @@ module.exports = async options => {
     .on("done", async (err, summary) => {
       sendTestData(tests)
 
+      console.log(`FUCK ERROR: ${process.env.ERROR}`)
       if (err || summary.error) {
         console.error(`Collection ran and encountered error: ${err}`);
       } else {
@@ -111,6 +112,7 @@ module.exports = async options => {
     });
 
     function sendTestData(tests) {
+      console.log(`FUCK ERROR: ${process.env.ERROR}`)
       console.log(`Time_stamp: ${timestamp}`)
       // testResultsApiClient.post("/", tests)
       // .then(function (response) {
