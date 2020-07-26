@@ -1,0 +1,54 @@
+# AWS Build Specification
+#
+#  BEWARE: This buildspec is included in every build pipeline for every API repo.  Be sure this buildspec
+#  works for EVERY -api repo before making changes.   Thank you.
+#
+version: 0.2
+env:
+  variables:
+    NODE_OPTIONS: "--max-old-space-size=14336"
+    ENDPOINT_SCHEMA_LAMBDA: "false"
+    PROJECT_URL: "https://github.com/Agrium/agrium-qa-api-tests"
+    PROJECT_NAME: "Postman/Newman"
+  parameter-store:
+    NEW_RELIC_INSIGHTS_INSERT_KEY: "/agrium/crop-planning/dev/NEW_RELIC_INSIGHTS_INSERT_KEY"
+    OAI_USER_ID: "/1/common/nutrien-api-tests-s3-endpoint-oai-user-id"
+    PACKAGECLOUD_MASTER_TOKEN: "/agrium/cxh-client/ssm/packagecloud_master_token"
+    POSTMAN_API_KEY: "/1/common/postman_api_key"
+    REPORTING_BUCKET: "/1/common/nutrien-api-tests-api-test-results"
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 10
+    commands:
+      - echo Entered the INSTALL phase...
+      - APP_DIR=`pwd`
+      - echo Setting up package cloud config
+      - force_npm=1
+      - curl -s https://$PACKAGECLOUD_MASTER_TOKEN:@packagecloud.io/install/repositories/agrible/lovepaign/script.node.sh | bash
+  build:
+    commands:
+      - echo Installing source NPM dependencies...
+      - env
+      - echo `pwd`
+      - npm config set unsafe-perm true
+      - npm install
+  post_build:
+    commands:
+      - ERROR=0
+      - |
+        ENV="$ENV_STAGE"
+        echo $ENV
+        echo Targeted collection $QA_API_TESTS
+        COMMAND="node src/index.js --env=$ENV_STAGE --collection=$QA_API_TESTS"
+        eval $COMMAND || ERROR=1
+        echo ERROR $ERROR
+      - echo ERROR STATE AT THE END IS... $ERROR
+      - if test `find ./src/results 2>&- | wc -l` -gt 1 ; then  cat ./src/results/* > index.html && aws s3api put-object --bucket ${REPORTING_BUCKET} --key index.html --body index.html --grant-read id=${OAI_USER_ID} --content-type text/html --cache-control no-cache; fi
+      - echo $?
+      - exit $ERROR
+
+artifacts:
+  files:
+    - "**/*"

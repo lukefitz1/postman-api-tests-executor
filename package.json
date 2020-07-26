@@ -1,0 +1,45 @@
+{
+  "name": "API",
+  "version": "3.0.0-alpha.2",
+  "description": "Run API tests",
+  "main": "index.js",
+  "engines": {
+    "node": ">=4.5.0",
+    "npm": "^3.0.0"
+  },
+  "scripts": {
+    "clean": "rmdir ./node_modules",
+    "cloudToLocal": "node src/utils/createCollectionsLocally.js",
+    "postman-cloud": "node src/index.js --env=dev",
+    "postman-local": "node src/index.js --local --env=dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Agrium/agrium-qa-api-tests.git"
+  },
+  "author": "Nutrien QE",
+  "license": "CPS",
+  "dependencies": {
+    "axios": "^0.19.0"
+  },
+  "keywords": [
+    "api",
+    "testing",
+    "automation"
+  ],
+  "devDependencies": {
+    "atob": "^2.1.2",
+    "chalk": "^2.4.2",
+    "deepmerge": "^3.2.0",
+    "dotenv": "^6.2.0",
+    "flat": "^4.1.0",
+    "lodash": "^4.17.11",
+    "newman": "^4.5.5",``
+    "newman-reporter-csv": "^1.1.1",
+    "newman-reporter-htmlextra": "^1.7.3",
+    "nutrien-schema-validator": "^1.0.5",
+    "reporter": "^0.1.0",
+    "xml2js": "^0.4.19",
+    "yargs": "~11.0.0"
+  }
+}
