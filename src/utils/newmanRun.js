@@ -4,7 +4,8 @@ const newman = require("newman");
 const envConfig = require("../utils/envConfig");
 const jsonToFile = require("../utils/jsonToFile");
 const axios = require("axios");
-const util = require('util')
+const util = require('util');
+require('dotenv');
 
 const RESOLVED_SOURCE_VERSION =
   process.env.CODEBUILD_RESOLVED_SOURCE_VERSION || "Unknown";
@@ -112,7 +113,7 @@ module.exports = async options => {
     });
 
     function sendTestData(tests) {
-      console.log(`FUCK ERROR: ${process.env.ERROR}`)
+      console.log(`ERROR: ${process.env.ERROR}`)
       console.log(`TEST_FAILURES: ${process.env.TEST_FAILURES}`)
       console.log(`CODEBUILD_BUILD_SUCCEEDING: ${process.env.CODEBUILD_BUILD_SUCCEEDING}`)
       console.log(`Time_stamp: ${timestamp}`)
