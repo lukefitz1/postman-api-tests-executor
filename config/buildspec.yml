@@ -25,9 +25,8 @@ phases:
         echo $ENV
         echo Targeted collection $QA_API_TESTS
         COMMAND="node src/index.js --env=$ENV_STAGE --collection=$QA_API_TESTS"
-        eval $COMMAND || ERROR=1 | tee results.out
+        eval $COMMAND || ERROR=1
       - echo ERROR STATE AT THE END IS... $ERROR
-      - aws s3api put-object --bucket ${REPORTING_BUCKET} --key index.html --body src/results/htmlResults.html --grant-read id=${OAI_USER_ID} --content-type text/html --cache-control no-cache
       - exit $ERROR
 
 artifacts:

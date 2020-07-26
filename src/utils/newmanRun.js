@@ -1,6 +1,6 @@
 const fs = require("fs");
 const newman = require("newman");
-const EndpointSchemaValidator = require("nutrien-schema-validator");
+// const EndpointSchemaValidator = require("nutrien-schema-validator");
 const envConfig = require("../utils/envConfig");
 const jsonToFile = require("../utils/jsonToFile");
 const axios = require("axios");
@@ -34,14 +34,14 @@ module.exports = async options => {
   } = await envConfig();
   const lambdaPath = process.env.ENDPOINT_SCHEMA_LAMBDA;
   const enableReporting = process.env.SCHEMA_VALIDATION_FLAG === "true";
-  const {
-    schemaReporting
-  } = new EndpointSchemaValidator(
-    api,
-    env,
-    lambdaPath,
-    enableReporting
-  );
+  // const {
+  //   schemaReporting
+  // } = new EndpointSchemaValidator(
+  //   api,
+  //   env,
+  //   lambdaPath,
+  //   enableReporting
+  // );
 
   let results;
   let assertion;

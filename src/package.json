@@ -36,7 +36,6 @@
     "lodash": "^4.17.11",
     "newman": "^4.4.0",
     "newman-reporter-htmlextra": "^1.7.3",
-    "nutrien-schema-validator": "^1.0.5",
     "xml2js": "^0.4.19",
     "yargs": "~11.0.0"
   }
