@@ -75,6 +75,7 @@ module.exports = async options => {
       } else {
         process.env.ERROR = "1"
         process.env.TEST_FAILURES = "1"
+        process.env.CODEBUILD_BUILD_SUCCEEDING = 0
         result = "failed"
       }
 
