@@ -73,8 +73,8 @@ module.exports = async options => {
       if (data.error == null) {
         result = "passed"
       } else {
-        process.env['ERROR'] = "1"
-        console.log(`FUCK ERROR: ${process.env['ERROR']}`)
+        process.env.ERROR = "1"
+        console.log(`FUCK ERROR: ${process.env.ERROR}`)
         result = "failed"
       }
 

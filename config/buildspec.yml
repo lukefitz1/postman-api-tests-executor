@@ -19,7 +19,6 @@ phases:
       - npm install
   post_build:
     commands:
-      - ERROR=0
       - |
         ENV="$ENV_STAGE"
         echo $ENV
