@@ -34,7 +34,7 @@
     "dotenv": "^6.2.0",
     "flat": "^4.1.0",
     "lodash": "^4.17.11",
-    "newman": "^4.5.5",``
+    "newman": "^4.5.5",
     "newman-reporter-csv": "^1.1.1",
     "newman-reporter-htmlextra": "^1.7.3",
     "nutrien-schema-validator": "^1.0.5",
