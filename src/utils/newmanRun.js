@@ -73,6 +73,7 @@ module.exports = async options => {
       if (data.error == null) {
         result = "passed"
       } else {
+        process.env.ERROR = "1"
         result = "failed"
       }
 
@@ -107,7 +108,7 @@ module.exports = async options => {
         jsonToFile(results, "Postman_Summary");
       }
 
-      if (process.env.ERROR = "1") {
+      if (process.env.ERROR == "1") {
         process.exit(1);
         // process.env.CODEBUILD_BUILD_SUCCEEDING = 0
       }
