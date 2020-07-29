@@ -1,28 +1,10 @@
 const fs = require("fs");
 const newman = require("newman");
-// const EndpointSchemaValidator = require("nutrien-schema-validator");
 const envConfig = require("../utils/envConfig");
 const jsonToFile = require("../utils/jsonToFile");
 const axios = require("axios");
 const util = require('util');
 
-const RESOLVED_SOURCE_VERSION =
-  process.env.CODEBUILD_RESOLVED_SOURCE_VERSION || "Unknown";
-const CODEBUILD_INITIATOR = process.env.CODEBUILD_INITIATOR || "Unknown";
-// const matchArray = CODEBUILD_INITIATOR.match(/GitHub-Hookshot/g)
-// console.log(" ------------ DEBUGGING /CODEBUILD VALUES ----------------")
-// console.log(`RESOLVED_SOURCE_VERSION: ${RESOLVED_SOURCE_VERSION}`)
-// console.log(`CODEBUILD_INITIATOR: ${CODEBUILD_INITIATOR}`)
-// console.log(" ------------ END DEBUGGING NEW RELIC VALUES ----------------");
-
-const testResultsApiClient = axios.create({
-  baseURL: 'http://localhost:3001/api/requests/create_requests',
-  headers: {
-    "x-api-key": "lWFT5mlfKVJt0pWulR42SyByQSneKAbE1p1aOxjuLtgHT"
-  }
-});
-
-// Generic function that sets up listeners and runs the specified collection via the options object
 module.exports = async options => {
   var tests = []
   var test = {}
@@ -32,16 +14,7 @@ module.exports = async options => {
   const {
     env
   } = await envConfig();
-  const lambdaPath = process.env.ENDPOINT_SCHEMA_LAMBDA;
   const enableReporting = process.env.SCHEMA_VALIDATION_FLAG === "true";
-  // const {
-  //   schemaReporting
-  // } = new EndpointSchemaValidator(
-  //   api,
-  //   env,
-  //   lambdaPath,
-  //   enableReporting
-  // );
 
   let results;
   let assertion;
@@ -96,7 +69,7 @@ module.exports = async options => {
 
       data.response = response;
       data.assertion = assertion;
-      if (enableReporting) await schemaReporting.schemaReporting(data);
+      // if (enableReporting) await schemaReporting.schemaReporting(data);
     })
     .on("done", async (err, summary) => {
       sendTestData(tests)
@@ -107,22 +80,37 @@ module.exports = async options => {
         results = summary;
         jsonToFile(results, "Postman_Summary");
       }
-
-      if (process.env.ERROR == "1") {
-        process.exit(1);
-        // process.env.CODEBUILD_BUILD_SUCCEEDING = 0
-      }
     });
 
     function sendTestData(tests) {
-      console.log(`Time_stamp: ${timestamp}`)
-      // testResultsApiClient.post("/", tests)
-      // .then(function (response) {
-      //   console.log(response.status);
-      // })
-      // .catch(function (error) {
-      //   console.log(error);
-      // });
+      const testResultsApiClient = axios.create({
+        baseURL:`${process.env.TEST_RESULTS_API_BASE_URL}/api/collections/create_collection`,
+        headers: {
+          "x-api-key": `${process.env.TEST_RESULTS_API_KEY}`
+        }
+      });
+
+      collection = {
+        "collection": {
+          "description": `${process.env.COLLECTION}`,
+          "date": `${timestamp}`,
+          "requests": tests
+        }
+      }
+
+      if (process.env.ENV_STAGE === 'staging') {
+        testResultsApiClient.post("/", collection)
+          .then(function (response) {
+            console.log(response.status);
+            if (process.env.ERROR == "1") {
+              process.exit(1);
+              // process.env.CODEBUILD_BUILD_SUCCEEDING = 0
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
     }
   return results;
 };

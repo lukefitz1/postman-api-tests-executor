@@ -8,7 +8,6 @@ class CommandLineArgs {
   processArgs() {
     this.argKeys.forEach((key) => {
       const arg = argv[key];
-      console.log(`Key: ${key}, Value: ${arg}`)
       switch (key.toLowerCase()) {
         case 'environment':
         case 'env':
