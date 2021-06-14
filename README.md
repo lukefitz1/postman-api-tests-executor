@@ -2,7 +2,6 @@
 Wrapper around postman collections to enable them to run in an AWS build project via node and the newman package.
 
 
-
 ## Setup
  - Run following command: ```npm install```
  - Resolve following environment variables in .env for local run. 
